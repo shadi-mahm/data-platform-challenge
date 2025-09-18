@@ -1,0 +1,53 @@
+shards: 1
+replicaCount: 1
+
+auth:
+  username: "default"
+  password: "clickhouse123"
+
+keeper:
+  enabled: false
+
+zookeeper:
+  enabled: false
+
+persistence:
+  enabled: true
+  size: 8Gi
+  
+resources:
+  limits:
+    cpu: 1000m
+    memory: 2Gi
+  requests:
+    cpu: 500m
+    memory: 1Gi
+
+podSecurityContext:
+  enabled: true
+  fsGroup: 1001
+
+containerSecurityContext:
+  enabled: true
+  runAsUser: 1001
+  runAsNonRoot: true
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop: ["ALL"]
+
+metrics:
+  enabled: true                 
+  serviceMonitor:
+    enabled: true                  
+    namespace: "observability"     
+    interval: "30s"              
+    scrapeTimeout: "10s"         
+    labels:
+      release: "prometheus"        
+  prometheusRule:
+    enabled: false
+
+networkPolicy:
+  enabled: false
+
+podAntiAffinityPreset: ""
