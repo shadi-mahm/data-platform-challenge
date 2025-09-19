@@ -218,5 +218,5 @@ kubectl port-forward -n observability svc/prometheus-grafana 3000:80
 # Username: admin, Password: prom-operator
 
 # Access Prometheus
-kubectl port-forward -n observability svc/prometheus-prometheus 3001:9090
+kubectl port-forward -n observability svc/prometheus-kube-prometheus-prometheus 3001:9090
 ```
