@@ -1,0 +1,60 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kafka-clickhouse-consumer-config
+  namespace: kafka
+data:
+  KAFKA_BOOTSTRAP_SERVERS: "kafka-cluster-kafka-bootstrap:9092"
+  KAFKA_TOPIC: "events"
+  KAFKA_GROUP_ID: "clickhouse-consumer"
+  CLICKHOUSE_HOST: "clickhouse.data.svc.cluster.local"
+  CLICKHOUSE_PORT: "9000"
+  CLICKHOUSE_USER: "default"
+  CLICKHOUSE_DATABASE: "bitpin"
+  CLICKHOUSE_TABLE: "events"
+  BATCH_SIZE: "100"
+  BATCH_TIMEOUT: "30"
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: kafka-clickhouse-consumer-secret
+  namespace: kafka
+type: Opaque
+stringData:
+  CLICKHOUSE_PASSWORD: "clickhouse123"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kafka-clickhouse-consumer
+  namespace: kafka
+  labels:
+    app: kafka-clickhouse-consumer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kafka-clickhouse-consumer
+  template:
+    metadata:
+      labels:
+        app: kafka-clickhouse-consumer
+    spec:
+      containers:
+      - name: consumer
+        image: kafka-clickhouse-consumer:latest
+        imagePullPolicy: Never
+        envFrom:
+        - configMapRef:
+            name: kafka-clickhouse-consumer-config
+        - secretRef:
+            name: kafka-clickhouse-consumer-secret
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "100m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+      restartPolicy: Always
