@@ -40,7 +40,22 @@ kubectl get nodes
 
 ## Quick Start
 
-### 1. Infrastructure Setup
+### 1. Install Observability Stack
+
+Add observability and visualization:
+
+```bash
+cd observability
+./install-observability.sh
+```
+
+**What this script does:**
+
+- **Installs Prometheus**: Metrics collection
+- **Installs Grafana**: Data visualization and dashboards
+- **Configures ServiceMonitors**: Automatic service discovery for monitoring
+
+### 2. Infrastructure Setup
 
 The infrastructure setup installs all necessary components on Kubernetes:
 
@@ -58,7 +73,7 @@ cd infrastructure
 - **Creates Kafka Cluster**: Single-node Kafka with KRaft mode (no ZooKeeper)
 - **Creates Kafka Topic**: Pre-configured `events` topic for the pipeline
 
-### 2. Database Schema Setup
+### 3. Database Schema Setup
 
 Create the ClickHouse database schema:
 
@@ -75,7 +90,7 @@ cd pipeline/schema
   - Time-based partitioning for query performance
   - Appropriate data types for each field
 
-### 3. Deploy Consumer Application
+### 4. Deploy Consumer Application
 
 Deploy the Python consumer that processes Kafka messages:
 
@@ -90,7 +105,7 @@ cd pipeline/consumer
 - **Deploys to Kubernetes**: Creates deployment with proper configuration
 - **Sets Environment Variables**: Configures Kafka and ClickHouse connections
 
-### 4. Generate Sample Data
+### 5. Generate Sample Data
 
 Produce sample events to test the pipeline:
 
@@ -105,21 +120,6 @@ cd pipeline/producer
 - **Publishes to Kafka**: Sends events to the `events` topic
 - **Uses Kafka Console Producer**: Leverages built-in Kafka tools for reliability
 
-### 5. Install Observability Stack
-
-Add observability and visualization:
-
-```bash
-cd observability
-./install-observability.sh
-```
-
-**What this script does:**
-
-- **Installs Prometheus**: Metrics collection
-- **Installs Grafana**: Data visualization and dashboards
-- **Configures ServiceMonitors**: Automatic service discovery for monitoring
-
 ## Project Structure
 
 ```plain
@@ -131,7 +131,8 @@ data-platform-challenge/
 │   └── manifests/            # Kubernetes YAML manifests
 │       ├── namespace.yaml
 │       ├── kafka-cluster.yaml
-│       └── events-topic.yaml
+│       ├── events-topic.yaml
+│       └── clickhouse-dashboard-configmap.yaml
 ├── pipeline/                 # Data pipeline components
 │   ├── consumer/             # Python Kafka consumer
 │   │   ├── consumer.py       # Main consumer application
@@ -146,8 +147,7 @@ data-platform-challenge/
 ├── observability/            # Observability and visualization
 │   ├── install-observability.sh
 │   └── manifests/
-│       ├── namespace.yaml
-│       └── clickhouse-dashboard-configmap.yaml
+│       └── namespace.yaml
 └── docs/                     # Additional documentation
 ```
 

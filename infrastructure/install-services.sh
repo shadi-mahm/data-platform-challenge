@@ -14,6 +14,9 @@ helm repo update
 echo "Installing ClickHouse single-node..."
 helm upgrade --install clickhouse bitnami/clickhouse --namespace data -f helm-values/clickhouse-values.yaml
 
+echo "Adding clickhouse metrics configmap..."
+kubectl apply -f manifests/clickhouse-dashboard-configmap.yaml
+
 echo "Installing Kafka operator..."
 helm upgrade --install strimzi-kafka-operator strimzi/strimzi-kafka-operator -n kafka
 

@@ -9,9 +9,6 @@ Write-Host "Adding Prometheus Community Helm repository..."
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 helm repo update
 
-Write-Host "Adding clickhouse metrics configmap..."
-kubectl apply -f manifests/clickhouse-dashboard-configmap.yaml
-
 Write-Host "Installing kube-prometheus-stack..."
 helm install prometheus prometheus-community/kube-prometheus-stack `
   --namespace observability

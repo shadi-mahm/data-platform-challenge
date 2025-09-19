@@ -10,9 +10,6 @@ echo "Adding Prometheus Community Helm repository..."
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 helm repo update
 
-echo "Adding clickhouse metrics configmap..."
-kubectl apply -f manifests/clickhouse-dashboard-configmap.yaml
-
 echo "Installing kube-prometheus-stack..."
 helm upgrade --install prometheus prometheus-community/kube-prometheus-stack --namespace observability -f helm-values/prometheus-values.yaml
 
