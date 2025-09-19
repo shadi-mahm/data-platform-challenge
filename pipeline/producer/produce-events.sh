@@ -4,7 +4,7 @@ set -e
 echo "Starting to produce 100 records into Kafka topic 'events'..."
 
 kubectl run -n kafka kafka-producer -ti --rm --restart=Never \
-  --image=bitnami/kafka:latest -- \
+  --image=quay.io/strimzi/kafka:0.47.0-kafka-4.0.0 -- \
   bash -c '
 for i in $(seq 1 100); do
   echo "{\"user_id\":\"user_$i\", \
@@ -13,7 +13,7 @@ for i in $(seq 1 100); do
          \"session_id\":\"sess_$((RANDOM%1000))\", \
          \"device\":\"$(shuf -e mobile desktop tablet -n 1)\"}"
 done \
-| b bin/kafka-console-producer.sh \
+| bin/kafka-console-producer.sh \
     --bootstrap-server kafka-cluster-kafka-bootstrap:9092 \
     --topic events \
     --producer-property acks=all \
