@@ -148,7 +148,7 @@ data-platform-challenge/
 │   ├── install-observability.sh
 │   └── manifests/
 │       └── namespace.yaml
-└── docs/                     # Additional documentation
+└
 ```
 
 ## Technology Selection & Rationale
