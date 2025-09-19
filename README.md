@@ -331,7 +331,7 @@ SETTINGS index_granularity = 8192;
 
 ## Additional Resources
 
-- [Strimzi Documentation](https://strimzi.io/docs/)
+- [Strimzi Documentation](https://strimzi.io/documentation/)
 - [ClickHouse Documentation](https://clickhouse.com/docs/)
 - [Kafka Best Practices](https://kafka.apache.org/documentation/#bestpractices)
 - [Kubernetes Documentation](https://kubernetes.io/docs/)
