@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-echo "Creating ClickHouse table and schema for events..."
+echo "Creating ClickHouse schema for events..."
 
 CLICKHOUSE_HOST="clickhouse"  # Service name in Kubernetes
 CLICKHOUSE_PORT="9000"
